@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+    <title>Simple CRUD</title>
+</head>
+    
+<body>
+    <h3>List Clients</h3>
+    <h:form rendered="#{not empty clientService.list}">
+        <h:dataTable value="#{clientService.list}" var="client">
+            <h:column><f:facet name="header">ID</f:facet>#{client.id}</h:column>
+            <h:column><f:facet name="header">Name</f:facet>#{client.name}</h:column>
+            <h:column><f:facet name="header">Age</f:facet>#{client.age}</h:column>
+            <h:column><f:facet name="header">Birth Date</f:facet>#{client.address}</h:column>
+             <h:column>
+                <h:commandButton value="edit" action="#{clientService.editClient(client)}" />
+            </h:column>
+            <h:column>
+                <h:commandButton value="delete" action="#{clientService.removeClient(client)}" />
+            </h:column>
+        </h:dataTable>
+    </h:form>
+    
+    <h:panelGroup rendered="#{empty clientService.list}">
+        <p>No clients! Please register your clients.</p>
+    </h:panelGroup>
+    
+    <h:panelGroup rendered="#{!clientService.updating}">
+        <h3>Add Client</h3>
+        <h:form>
+            <p>Name: <h:inputText value="#{clientService.client.name}" /></p>
+            <p>Age: <h:inputText value="#{clientService.client.age}" /></p>
+			<p>Address: <h:inputText value="#{clientService.client.address}" /></p>
+            
+            <p>
+                <h:commandButton value="add" action="#{clientService.addClient}" />
+            </p>
+        </h:form>
+    </h:panelGroup>
+    
+    <h:panelGroup rendered="#{clientService.updating}">
+        <h3>Edit client #{clientService.client.name}</h3>
+        <h:form>
+             <p>Name: <h:inputText value="#{clientService.client.name}" /></p>
+            <p>Age: <h:inputText value="#{clientService.client.age}" /></p>
+			<p>Address: <h:inputText value="#{clientService.client.address}" /></p>
+            
+            <p>
+                <h:commandButton value="save" action="#{clientService.update}" />
+                <h:commandButton value="cancel" action="#{clientService.cancelUpdate}" />
+            </p>
+        </h:form>
+    </h:panelGroup>
+    
+</body>
+</html>
