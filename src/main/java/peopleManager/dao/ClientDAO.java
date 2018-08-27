@@ -36,10 +36,8 @@ public class ClientDAO {
 		em.getTransaction().commit();
 	}
 	
-	public void find(Client client) {
-		em.getTransaction().begin();
-		em.remove(findClientById(client.getId()));
-		em.getTransaction().commit();
+	public Client find(Client client) {
+		 return findClientById(client.getId());
 	}
 	
 	public Client findClientById(Integer id) {
