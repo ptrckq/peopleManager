@@ -13,7 +13,7 @@
             <h:column><f:facet name="header">ID</f:facet>#{client.id}</h:column>
             <h:column><f:facet name="header">Name</f:facet>#{client.name}</h:column>
             <h:column><f:facet name="header">Age</f:facet>#{client.age}</h:column>
-            <h:column><f:facet name="header">Birth Date</f:facet>#{client.address}</h:column>
+            <h:column><f:facet name="header">Address</f:facet>#{client.address}</h:column>
              <h:column>
                 <h:commandButton value="edit" action="#{clientService.editClient(client)}" />
             </h:column>
@@ -35,7 +35,7 @@
 			<p>Address: <h:inputText value="#{clientService.client.address}" /></p>
             
             <p>
-                <h:commandButton value="add" action="#{clientService.addClient}" />
+                <h:commandButton value="add" action="#{clientService.addClient(clientService.client)}" />
             </p>
         </h:form>
     </h:panelGroup>
@@ -48,7 +48,7 @@
 			<p>Address: <h:inputText value="#{clientService.client.address}" /></p>
             
             <p>
-                <h:commandButton value="save" action="#{clientService.update}" />
+                <h:commandButton value="save" action="#{clientService.update(clientService.client)}" />
                 <h:commandButton value="cancel" action="#{clientService.cancelupdate()}" />
             </p>
         </h:form>
