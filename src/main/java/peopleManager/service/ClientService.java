@@ -3,12 +3,10 @@ package peopleManager.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import peopleManager.dao.ClientDAO;
 import peopleManager.model.Client;
@@ -17,25 +15,37 @@ import peopleManager.model.Client;
 @SessionScoped
 public class ClientService {
 
-	@PersistenceContext
-	private EntityManager em;
 
-	Client client = new Client();
-	private List<Client> clientList = new ArrayList<Client>();
-	private ClientDAO clientDao = new ClientDAO();
-	private boolean updating = false;
-
-	@RequestScoped
-	@Transactional
-	public void addClient() {
-		clientDao.insere(client);
+	
+	Client client;
+	private List<Client> clientList ;
+	
+	@EJB
+	private ClientDAO clientDao ;
+	
+	private boolean updating;
+	
+	
+	public ClientService() {
+		updating = false;
 		client = new Client();
+		clientList = new ArrayList<Client>();
+	}
+	
+	@RequestScoped
+	public void addClient(Client client) {
+		clientDao.insere(client);
 	}
 
 	@RequestScoped
-	@Transactional
 	public void removeClient(Client client) {
 		clientDao.remove(client);
+	}
+
+	@RequestScoped
+	public void update(Client client) {
+		clientDao.update(client);
+		setUpdating(false);
 	}
 
 	public void find(Client client) {
@@ -79,12 +89,7 @@ public class ClientService {
 		this.updating = updating;
 	}
 
-	public void update() {
-		clientDao.update(client);
-		setUpdating(false);
-		client = new Client();
-	}
-
+	
 	public void cancelupdate() {
 		setUpdating(false);
 	}
@@ -92,7 +97,7 @@ public class ClientService {
 	public void editClient(Client client) {
 		this.client = client;
 		setUpdating(true);
-
 	}
+	
 
 }

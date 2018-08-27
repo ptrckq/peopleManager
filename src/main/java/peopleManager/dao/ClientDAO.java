@@ -2,38 +2,26 @@ package peopleManager.dao;
 
 import java.util.List;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.transaction.Transactional;
+import javax.persistence.PersistenceContext;
 
 import peopleManager.model.Client;
 
-@Transactional
-@Singleton
+@Stateless
 public class ClientDAO {
 
-	private EntityManagerFactory emf;
+	@PersistenceContext(unitName="client")
 	private EntityManager em;
 
-	public ClientDAO() {
-		emf =  Persistence.createEntityManagerFactory("client");
-		em = emf.createEntityManager();
-	}
-	
 	
 	public void insere(Client client) {
-		em.getTransaction().begin();
 		em.persist(client);
-		em.getTransaction().commit();
 	}
 	
 	public void remove (Client client) {
-		em.getTransaction().begin();
 		Client c = em.merge(client);
 		em.remove(c);
-		em.getTransaction().commit();
 	}
 	
 	public Client find(Client client) {
@@ -41,7 +29,7 @@ public class ClientDAO {
 	}
 	
 	public Client findClientById(Integer id) {
-		return em.createNamedQuery("findClient",Client.class).setParameter("id", id).getSingleResult();
+		return em.createNamedQuery("findClientById",Client.class).setParameter("id", id).getSingleResult();
 	}
 	
 	public List<Client> getList() {
@@ -50,8 +38,6 @@ public class ClientDAO {
 
 
 	public void update(Client client) {
-		em.getTransaction().begin();
 		em.merge(client);
-		em.getTransaction().commit();
 	}
 }

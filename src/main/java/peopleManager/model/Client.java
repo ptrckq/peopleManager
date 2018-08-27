@@ -2,7 +2,6 @@ package peopleManager.model;
 
 import java.util.Date;
 
-import javax.faces.bean.ManagedBean;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,9 +18,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries(
 		value = {
 				@NamedQuery(name = "getAllClients", query = "SELECT c FROM Client c"),
-				@NamedQuery(name = "findClient",query="SELECT c FROM Client c where c.id = :id")}
+				@NamedQuery(name = "findClientById",query="SELECT c FROM Client c where c.id = :id")}
 )
-@ManagedBean(name = "client")
 public class Client {
 
 	@Id
