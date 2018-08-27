@@ -8,7 +8,6 @@
 
 		<jta-data-source>java:jboss/ClientDB</jta-data-source>
 		
-		<class>peopleManager.model.Client</class>
 
 		<properties>
 			<property name="hibernate.dialect"
